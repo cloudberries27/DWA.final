@@ -1,24 +1,106 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
+import { Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
+import * as firebase from "firebase/app";
+import "firebase/auth";
 import './App.css';
 
+import Header from "./components/Header/index"
+import Login from "./pages/Login";
+import UserProfile from "./pages/UserProfile";
+import SignUp from "./pages/SignUp";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBHS-03PLjmfmFU8pvHeRcCyqCR95_anIE",
+  authDomain: "dwa-final.firebaseapp.com",
+  databaseURL: "https://dwa-final.firebaseio.com",
+  projectId: "dwa-final",
+  storageBucket: "dwa-final.appspot.com",
+  messagingSenderId: "511680695515",
+  appId: "1:511680695515:web:439151a4e828374d38d0fe"
+};
+
+
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState({});
+
+  useEffect(()=> {
+    if(!firebase.apps.length){
+      firebase.initializeApp(firebaseConfig);
+    }
+    firebase
+      .auth()
+      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+      .catch(function (error) {
+        console.log('error', error);
+    });
+  }, [firebaseConfig]);
+
+  useEffect(()=>{
+    firebase.auth().onAuthStateChanged(function(user){
+      if (user){
+        setLoggedIn(true);
+        setUser(user);
+      }else{
+        setLoggedIn(false);
+        setUser({});
+      }
+    });
+  }, [])
+
+  function signUpFunction(e){
+    e.preventDefault();
+    let email = e.currentTarget.createEmail.value;
+    let password = e.currentTarget.createPassword.value;
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(function(response){
+        setLoggedIn(true);
+      })
+      .catch(function(error) {
+        console.log('error',error);
+    });
+  }
+  function logInFunction(e){
+    e.preventDefault();
+    let email = e.currentTarget.loginEmail.value;
+    let password = e.currentTarget.loginPassword.value;
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(function(response){
+        setLoggedIn(true);
+      })
+      .catch(function(error) {
+        console.log('error',error);
+    });
+  }
+  function logoutFunction(){
+    firebase
+      .auth()
+      .signOut()
+      .then(function(response){
+        setLoggedIn(false);
+      })
+      .catch(function(error) {
+        console.log('error',error);
+    });
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header loggedIn={loggedIn} logoutFunction={logoutFunction}/>
+      <Router>
+        <Route exact path='/'>
+          {loggedIn ? <UserProfile user={user}/> : <Redirect to='/login'/>}
+        </Route>
+        <Route exact path='/sign-up'>
+          {loggedIn ?  <Redirect to='/' /> : <SignUp signUpFunction = {signUpFunction}/> }
+        </Route>
+        <Route exact path='/login'>
+          {loggedIn ? <Redirect to='/' /> : <Login logInFunction = {logInFunction}/> }
+        </Route>
+      </Router>
     </div>
   );
 }
