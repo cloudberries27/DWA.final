@@ -14,9 +14,9 @@ export default function UserProfile({ user }){
 	  });
 	return (
 		<div className='user-profile'>
-			
+			<img alt='user profile image' src={user.photoURL}/>
 			<h1>{user.displayName}</h1>
-			<UserInformation email={user.email ? user.email : 'oh no'}/>
+			<UserInformation uid = {user.uid ? user.uid: 'oops'} email={user.email ? user.email : 'oh no'}/>
 		</div>
 	);
 }

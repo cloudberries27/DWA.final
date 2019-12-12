@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
+import { Route, BrowserRouter, Redirect } from 'react-router-dom';
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import './App.css';
@@ -8,6 +8,8 @@ import Header from "./components/Header/index"
 import Login from "./pages/Login";
 import UserProfile from "./pages/UserProfile";
 import SignUp from "./pages/SignUp";
+import CreatePost from "./pages/CreatePost/index.js";
+import Feed from "./pages/Feed/index.js"
 
 const firebaseConfig = {
   apiKey: "AIzaSyBHS-03PLjmfmFU8pvHeRcCyqCR95_anIE",
@@ -90,9 +92,9 @@ function App() {
   return (
     <div className="App">
       <Header loggedIn={loggedIn} logoutFunction={logoutFunction}/>
-      <Router>
-        <Route exact path='/'>
-          {loggedIn ? <UserProfile user={user}/> : <Redirect to='/login'/>}
+      <BrowserRouter>
+        <Route exact path="/">
+            { loggedIn ? <Feed user = {user} /> : <Redirect to="/login" /> } 
         </Route>
         <Route exact path='/sign-up'>
           {loggedIn ?  <Redirect to='/' /> : <SignUp signUpFunction = {signUpFunction}/> }
@@ -100,7 +102,13 @@ function App() {
         <Route exact path='/login'>
           {loggedIn ? <Redirect to='/' /> : <Login logInFunction = {logInFunction}/> }
         </Route>
-      </Router>
+        <Route exact path="/user-profile">
+          { loggedIn ?  <UserProfile user = {user} /> : <Login loginFunction={loginFunction}/> }
+        </Route>
+        <Route exact path="/create-post">
+          { loggedIn ?  <CreatePost user = {user} /> : <Login loginFunction={loginFunction}/> }
+        </Route>
+      </BrowserRouter>
     </div>
   );
 }
