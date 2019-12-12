@@ -105,7 +105,7 @@ function App() {
         <Route exact path="/user-profile">
           { loggedIn ?  <UserProfile user = {user} /> : <Login logInFunction={logInFunction}/> }
         </Route>
-        <Route exact path="/create-post">
+        <Route exact path="/make-post">
           { loggedIn ?  <CreatePost user = {user} /> : <Login logInFunction={logInFunction}/> }
         </Route>
       </BrowserRouter>

@@ -5,7 +5,7 @@ import CreatePostForm from "../../components/CreatePostForm ";
 
 export default function CreatePost({ user }) {
     return( 
-        <div>
+        <div className='post-form'>
             <CreatePostForm uid = {user.uid ? user.uid: "no user ID"}/>
         </div>
     );

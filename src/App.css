@@ -84,3 +84,8 @@ button:hover{
   height: 200px;
   border-radius: 50%;
 }
+
+.post-form{
+  margin:auto;
+  width:75%;
+}

@@ -9,7 +9,7 @@ export default function PostForm({ uid }) {
         e.preventDefault(e); 
         
         let title = e.currentTarget.title.value;
-        let bodyText = e.currentTarget.bodytext.value;
+        let bodyText = e.currentTarget.bodyText.value;
         axios.get(`https://dwa-final-server.herokuapp.com/make-post?title=${title}&bodyText=${bodyText}&userID=${uid}`)
             .then(function (response) {
                 setPostData(response);
