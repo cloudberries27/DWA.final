@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import Post from './post.js'
 
-export function FeedComponent({ uid }) { 
+export default function FeedComponent({ uid }) { 
     const [posts, setPosts] = useState({});
     const [user, setUser] = useState("");
     const [title, setTitle] = useState("");

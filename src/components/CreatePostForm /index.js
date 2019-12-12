@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
 
-export default function postForm({ uid }) {    
+export default function PostForm({ uid }) {    
     const [postData, setPostData] = useState({});
 
     function makePost(e) {

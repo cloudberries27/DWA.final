@@ -1,7 +1,6 @@
 import React from "react";
 
-//this is a component that we're pushing here
-import { Feed } from './components/FeedComponent/index.js';
+import Feed from '../../components/FeedComponent';
 
 export default function displayFeed({ user }){
     console.log(user);

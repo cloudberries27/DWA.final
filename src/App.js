@@ -103,10 +103,10 @@ function App() {
           {loggedIn ? <Redirect to='/' /> : <Login logInFunction = {logInFunction}/> }
         </Route>
         <Route exact path="/user-profile">
-          { loggedIn ?  <UserProfile user = {user} /> : <Login loginFunction={loginFunction}/> }
+          { loggedIn ?  <UserProfile user = {user} /> : <Login logInFunction={logInFunction}/> }
         </Route>
         <Route exact path="/create-post">
-          { loggedIn ?  <CreatePost user = {user} /> : <Login loginFunction={loginFunction}/> }
+          { loggedIn ?  <CreatePost user = {user} /> : <Login logInFunction={logInFunction}/> }
         </Route>
       </BrowserRouter>
     </div>

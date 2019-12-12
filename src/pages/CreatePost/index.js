@@ -1,6 +1,6 @@
 import React from "react";
 
-import CreatePostForm from "../../components/CreatePostForm/index"
+import CreatePostForm from "../../components/CreatePostForm ";
 
 
 export default function CreatePost({ user }) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
 export default function UserInformation({ uid, email }) {
@@ -6,7 +6,7 @@ export default function UserInformation({ uid, email }) {
 
     useEffect(()=>{
         getUserPosts();
-    }, [uID])
+    }, [uid])
     function getUserPosts() {
         axios.get(`https://dwa-final-server.herokuapp.com/get-all-posts/${uid}`) 
             .then(function (response) {
